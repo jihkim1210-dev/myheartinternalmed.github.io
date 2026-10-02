@@ -350,6 +350,10 @@ def notice_items(limit=None, compact=False):
                     f'<time datetime="{d}">{date}</time></span></a></li>')
     return out
 
+# 홈 화면 영상 (YouTube)
+VIDEO_ID = "fgRDbwQsFFI"
+VIDEO_TITLE = "당뇨병, 고혈압, 이상지질혈증 왜 항상 같이 올까? 올바른 관리법 총 정리 | 내과 전문의 김지우 원장"
+
 # ── 페이지 본문 ──────────────────────────────────────────────────────
 def home():
     docs = "".join(f'''<a class="doc-teaser" href="about.html#dr-{d["id"]}">
@@ -397,12 +401,22 @@ def home():
 </div></section>
 
 <section class="section"><div class="wrap">
+  {section_head("건강 영상", "김지우 원장이 알려드리는 만성질환 관리", "당뇨병, 고혈압, 이상지질혈증은 왜 함께 올까요? 올바른 관리법을 영상으로 확인해 보세요.")}
+  <div class="video">
+    <iframe src="https://www.youtube-nocookie.com/embed/{VIDEO_ID}" title="{VIDEO_TITLE}" loading="lazy"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <p class="video-src">출처: 건강의학전문채널 하이닥 · <a href="https://youtu.be/{VIDEO_ID}" target="_blank" rel="noopener">YouTube에서 보기</a></p>
+</div></section>
+
+<section class="section alt"><div class="wrap">
   <div class="section-head row"><div><div class="eyebrow">공지사항</div><h2>내마음내과 소식</h2></div>
     <a class="link-more" href="notice.html">전체 보기 →</a></div>
   <ul class="notice-list compact">{notice_items(4, compact=True)}</ul>
 </div></section>
 
-<section class="section alt"><div class="wrap split">
+<section class="section"><div class="wrap split">
   <div>
     {section_head("건강검진센터", "가까운 곳에서 받는 정기 검진")}
     <ul class="checklist">
