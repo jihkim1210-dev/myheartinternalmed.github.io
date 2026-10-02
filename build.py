@@ -471,9 +471,6 @@ def about():
 </div></section>
 
 <section class="section alt anchor" id="doctors"><div class="wrap">
-  <figure class="banner-figure" style="margin-bottom:56px">
-    <img src="assets/img/doctors-banner.jpg" srcset="assets/img/doctors-banner-800.jpg 800w, assets/img/doctors-banner.jpg 1254w" sizes="(max-width:680px) 100vw, 640px" alt="내마음내과 의료진, 내과전문의 여의사 진료" width="1254" height="1254">
-  </figure>
   {section_head("의료진 안내", "내마음내과 의료진")}
   <div class="doctors">{"".join(doctor_card(d) for d in DOCTORS)}</div>
 </div></section>
