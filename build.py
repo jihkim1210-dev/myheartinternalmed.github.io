@@ -166,12 +166,12 @@ def section_head(eyebrow, title, lead=""):
 DOCTORS = [
     {
         "id": "kimyw", "name": "김용욱", "role": "대표원장", "room": "제1진료실",
-        "spec": "소화기내과 전문의", "photo": "assets/img/doctor-kimyw.jpg",
+        "spec": "내과 전문의", "photo": "assets/img/doctor-kimyw.jpg",
         "career": [], "societies": [], "awards": [],
     },
     {
         "id": "kimjw", "name": "김지우", "role": "원장", "room": "제2진료실",
-        "spec": "내과 전문의", "photo": "assets/img/doctor-kimjw.jpg",
+        "spec": "내과 전문의 · 소화기내시경 세부전문의", "photo": "assets/img/doctor-kimjw.jpg",
         "career": [
             "연세대학교 의과대학 졸업",
             "연세대학교 신촌세브란스병원 인턴 수료",
@@ -240,7 +240,7 @@ CLINIC_DETAIL = {
     "chronic": (["고혈압", "당뇨병", "고지혈증(이상지질혈증)", "지방간"],
                 "만성질환은 꾸준한 관리가 중요합니다. 정기적인 검사로 수치를 확인하고, 생활습관과 약 복용을 함께 점검합니다."),
     "endoscopy": (["위내시경", "진정(수면) 내시경", "내시경 후 회복실 이용"],
-                  "전문의가 내시경 검사를 하며, 진정 내시경 후에는 회복실에서 충분히 쉬신 뒤 귀가하실 수 있습니다."),
+                  "소화기내시경 세부전문의가 내시경 검사를 하며, 진정 내시경 후에는 회복실에서 충분히 쉬신 뒤 귀가하실 수 있습니다."),
     "ultrasound": (["상복부: 간암, 간경화, 지방간, 췌장암, 담석 등", "갑상선: 갑상선암, 갑상선결절, 갑상선염 등",
                     "경동맥: 뇌졸중, 동맥경화, 심근경색 등", "심장: 심근경색, 심장부정맥, 심장질환 등",
                     "유방: 유방암, 유방종양, 물혹 등"],
@@ -365,7 +365,7 @@ def home():
     <div>
       <div class="eyebrow">{CLINIC["slogan"]}</div>
       <h1>내 마음을 듣는 진료,<br><em>내마음내과</em>입니다</h1>
-      <p class="lead">소화기내과 전문의와 내과 전문의가 진료하며, 여성 전문의 진료도 받으실 수 있습니다. 내시경, 초음파, 건강검진까지 한 곳에서 살펴드립니다.</p>
+      <p class="lead">내과 전문의 두 명이 진료하며, 여성 전문의 진료도 받으실 수 있습니다. 내시경, 초음파, 건강검진까지 한 곳에서 살펴드립니다.</p>
       <div class="badges">
         <span class="badge">{icon("shield")}삼성생명 검진 지정기관</span>
         <span class="badge">{icon("shield")}고려대학교병원 위탁기관</span>

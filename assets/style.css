@@ -277,3 +277,4 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video-src{margin-top:10px;color:var(--muted);font-size:.9rem}
 .video-src a{color:var(--blue)}
+.framed img{aspect-ratio:3/2}
