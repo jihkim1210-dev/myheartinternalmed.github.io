@@ -278,3 +278,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
 .video-src{margin-top:10px;color:var(--muted);font-size:.9rem}
 .video-src a{color:var(--blue)}
 .framed img{aspect-ratio:3/2}
+.sub-blocks{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.sub-block{background:var(--soft);border-radius:var(--radius);padding:20px 22px}
+.sub-block .tag{color:var(--blue);font-weight:700;font-size:.85rem}
+.sub-block h3{font-size:1.1rem;font-weight:800;margin:4px 0 10px}
+.sub-block p{font-size:.95rem}
+.sub-block p+p{margin-top:8px}
+@media (max-width:760px){.sub-blocks{grid-template-columns:1fr}}
