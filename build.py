@@ -166,7 +166,7 @@ def section_head(eyebrow, title, lead=""):
 DOCTORS = [
     {
         "id": "kimyw", "name": "김용욱", "role": "대표원장", "room": "제1진료실",
-        "spec": "내과 전문의", "photo": "assets/img/doctor-kimyw.jpg",
+        "spec": "내과 전문의 · 소화기내시경 세부전문의", "photo": "assets/img/doctor-kimyw.jpg",
         "career": [], "societies": [], "awards": [],
     },
     {
