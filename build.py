@@ -23,7 +23,13 @@ CLINIC = {
     "biz_no": "134-92-01762",
     "domain": "https://myheartinternalmed.kr",
     "map_query": "내마음내과의원 안산",
+    "instagram": "https://www.instagram.com/myheart_internalmed/",
+    # 네이버 서치어드바이저에서 받은 사이트 소유확인 코드(content 값)를 넣으면 모든 페이지에 들어갑니다.
+    "naver_verify": "",
 }
+# 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
+SEO_KEYWORDS = "안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
+SEO_LINE = "안산 중앙역 내과 · 건강검진 · 위내시경 · 초음파 · 여의사(여성 내과 전문의) 진료"
 CLOSED = ' class="closed"'
 CURRENT = ' aria-current="page"'
 
@@ -116,6 +122,7 @@ def footer():
       <dt>전화</dt><dd>{CLINIC["phone"]}</dd>
       <dt>사업자등록번호</dt><dd>{CLINIC["biz_no"]}</dd>
     </dl>
+    <p class="legal">{SEO_LINE}</p>
     <p class="legal">© {CLINIC["name_full"]}. 본 홈페이지의 의료 정보는 일반적인 안내이며, 정확한 진단과 치료는 내원하여 의료진과 상담하시기 바랍니다.</p>
   </div>
 </footer>
@@ -132,15 +139,50 @@ def footer():
 }})();
 </script>'''
 
+def json_ld():
+    """검색엔진용 병원 정보(구조화 데이터)."""
+    import json
+    days = {"평일": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "토요일": ["Saturday"]}
+    hours = []
+    for day, t, _, closed in HOURS:
+        if closed or day not in days:
+            continue
+        o, c = [x.strip() for x in t.split("~")]
+        hours.append({"@type": "OpeningHoursSpecification", "dayOfWeek": days[day], "opens": o, "closes": c})
+    data = {
+        "@context": "https://schema.org", "@type": "MedicalClinic",
+        "name": CLINIC["name_full"], "alternateName": [CLINIC["name"], "내마음내과 건강검진센터"],
+        "url": CLINIC["domain"] + "/", "telephone": CLINIC["phone"],
+        "image": CLINIC["domain"] + "/assets/img/doctors-banner-800.jpg",
+        "logo": CLINIC["domain"] + "/assets/img/logo.png",
+        "address": {"@type": "PostalAddress", "streetAddress": "예술대학로 17 안산중앙노블레스 5층",
+                    "addressLocality": "안산시 단원구", "addressRegion": "경기도", "addressCountry": "KR"},
+        "areaServed": "경기도 안산시",
+        "medicalSpecialty": ["InternalMedicine", "Gastroenterologic"],
+        "availableService": [{"@type": "MedicalProcedure", "name": n} for n in
+                             ["건강검진", "국가건강검진", "위내시경", "진정(수면) 내시경", "복부 초음파", "갑상선 초음파",
+                              "경동맥 초음파", "심장 초음파", "유방 초음파", "예방접종"]],
+        "openingHoursSpecification": hours,
+        "sameAs": [CLINIC["instagram"]],
+    }
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
 def page(filename, title, description, body, full=True):
     """full=True: 실제 배포용(완전한 HTML). full=False: 미리보기용(문서 틀 없이)."""
-    page_title = CLINIC["name"] if filename == "index.html" else f'{title} | {CLINIC["name"]}'
+    page_title = (f'{CLINIC["name_full"]} | 안산 내과 · 건강검진 · 위내시경 · 초음파' if filename == "index.html"
+                  else f'{title} | 안산 {CLINIC["name_full"]}')
+    url = f'{CLINIC["domain"]}/{"" if filename == "index.html" else filename}'
+    verify = f'<meta name="naver-site-verification" content="{CLINIC["naver_verify"]}">' if CLINIC["naver_verify"] else ""
     meta = (f'<title>{page_title}</title>'
             f'<meta name="description" content="{description}">'
+            f'<meta name="keywords" content="{SEO_KEYWORDS}">{verify}'
+            f'<meta property="og:type" content="website"><meta property="og:site_name" content="{CLINIC["name_full"]}">'
+            f'<meta property="og:locale" content="ko_KR"><meta property="og:url" content="{url}">'
             f'<meta property="og:title" content="{page_title}">'
             f'<meta property="og:description" content="{description}">'
             f'<meta property="og:image" content="{CLINIC["domain"]}/assets/img/doctors-banner-800.jpg">'
-            f'<link rel="icon" href="assets/img/favicon.png"><link rel="canonical" href="{CLINIC["domain"]}/{"" if filename == "index.html" else filename}">'
+            f'<link rel="icon" href="assets/img/favicon.png"><link rel="canonical" href="{url}">'
+            f'{json_ld() if filename == "index.html" else ""}'
             f'{HEAD_FONTS}<link rel="stylesheet" href="assets/style.css">')
     content = f'{header(filename)}\n<main>\n{body}\n</main>\n{footer()}'
     if not full:
@@ -599,12 +641,12 @@ def notice_post(d, t, body_fn):
 '''
 
 PAGES = [
-    ("index.html", "홈", f'{CLINIC["name"]}: {CLINIC["slogan"]}. 안산 중앙역 내과 전문의 진료, 여성 전문의, 내시경·초음파, 건강검진.', home),
-    ("about.html", "병원소개", "내마음내과 인사말, 의료진 안내, 내부시설.", about),
-    ("clinic.html", "진료과목", "일반 내과, 만성질환, 소화기 내시경, 초음파, 갑상선, 건강검진, 예방접종 안내.", clinic),
-    ("checkup.html", "건강검진센터", "국가건강검진, 삼성생명 지정 검진, 검진 시설과 준비사항 안내.", checkup),
-    ("info.html", "이용안내", "진료시간, 오시는 길, 주차, 비급여 진료비, 제증명 발급 안내.", info),
-    ("notice.html", "공지사항", "내마음내과 공지사항과 새로운 소식.", notice_list),
+    ("index.html", "홈", "안산 중앙역 내마음내과의원. 내과 전문의·소화기내시경 세부전문의 진료, 여의사(여성 내과 전문의) 진료, 위내시경·수면내시경, 복부·갑상선·경동맥·심장·유방 초음파, 국가건강검진.", home),
+    ("about.html", "병원소개", "안산 내마음내과의원 인사말, 의료진(내과 전문의·소화기내시경 세부전문의, 여의사 진료), 내시경실·초음파실 등 내부시설.", about),
+    ("clinic.html", "진료과목", "안산 내마음내과 진료과목: 일반 내과, 고혈압·당뇨 만성질환, 위내시경·수면내시경, 초음파, 갑상선 결절 세침검사(FNA), 예방접종.", clinic),
+    ("checkup.html", "건강검진센터", "안산 건강검진: 국가건강검진, 삼성생명 지정 검진, 위내시경·초음파 추가 검사와 검진 준비사항 안내.", checkup),
+    ("info.html", "이용안내", "안산 내마음내과 진료시간, 오시는 길(4호선 중앙역 1번 출구), 주차, 비급여 진료비, 제증명 발급 안내.", info),
+    ("notice.html", "공지사항", "안산 내마음내과 공지사항과 새로운 소식.", notice_list),
 ] + [(fn, t, sm, (lambda d=d, t=t, b=b: notice_post(d, t, b))) for fn, d, t, sm, _, b in NOTICES]
 
 if __name__ == "__main__":
@@ -615,4 +657,11 @@ if __name__ == "__main__":
         if preview_dir and fn == "index.html":
             preview_dir.mkdir(parents=True, exist_ok=True)
             (preview_dir / fn).write_text(page(fn, title, desc, body_fn(), full=False), encoding="utf-8")
-    print("built", [p[0] for p in PAGES])
+    import datetime
+    today = datetime.date.today().isoformat()
+    urls = "".join(f'<url><loc>{CLINIC["domain"]}/{"" if fn == "index.html" else fn}</loc><lastmod>{today}</lastmod></url>\n'
+                   for fn, *_ in PAGES)
+    (ROOT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n', encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f'User-agent: *\nAllow: /\n\nSitemap: {CLINIC["domain"]}/sitemap.xml\n', encoding="utf-8")
+    print("built", [p[0] for p in PAGES], "+ sitemap.xml, robots.txt")
