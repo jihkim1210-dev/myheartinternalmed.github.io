@@ -28,8 +28,8 @@ CLINIC = {
     "naver_verify": "",
 }
 # 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
-SEO_KEYWORDS = "안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
-SEO_LINE = "안산 중앙역 내과 · 건강검진 · 위내시경 · 초음파 · 여의사(여성 내과 전문의) 진료"
+SEO_KEYWORDS = "안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
+SEO_LINE = "안산 중앙역 내과 · 건강검진 · 위내시경 · 대장내시경 · 초음파 · 여의사(여성 내과 전문의) 진료"
 CLOSED = ' class="closed"'
 CURRENT = ' aria-current="page"'
 
@@ -160,7 +160,7 @@ def json_ld():
         "areaServed": "경기도 안산시",
         "medicalSpecialty": ["InternalMedicine", "Gastroenterologic"],
         "availableService": [{"@type": "MedicalProcedure", "name": n} for n in
-                             ["건강검진", "국가건강검진", "위내시경", "진정(수면) 내시경", "복부 초음파", "갑상선 초음파",
+                             ["건강검진", "국가건강검진", "위내시경", "대장내시경", "진정(수면) 내시경", "복부 초음파", "갑상선 초음파",
                               "경동맥 초음파", "심장 초음파", "유방 초음파", "예방접종"]],
         "openingHoursSpecification": hours,
         "sameAs": [CLINIC["instagram"]],
@@ -169,7 +169,7 @@ def json_ld():
 
 def page(filename, title, description, body, full=True):
     """full=True: 실제 배포용(완전한 HTML). full=False: 미리보기용(문서 틀 없이)."""
-    page_title = (f'{CLINIC["name_full"]} | 안산 내과 · 건강검진 · 위내시경 · 초음파' if filename == "index.html"
+    page_title = (f'{CLINIC["name_full"]} | 안산 내과 · 건강검진 · 위·대장내시경 · 초음파' if filename == "index.html"
                   else f'{title} | 안산 {CLINIC["name_full"]}')
     url = f'{CLINIC["domain"]}/{"" if filename == "index.html" else filename}'
     verify = f'<meta name="naver-site-verification" content="{CLINIC["naver_verify"]}">' if CLINIC["naver_verify"] else ""
@@ -268,7 +268,7 @@ def gallery():
 SERVICES = [
     ("general", "steth", "일반 내과", "감기, 장염, 소화불량 등 일상의 급성 질환을 진료합니다."),
     ("chronic", "pulse", "만성질환 관리", "고혈압, 당뇨병, 고지혈증을 꾸준히 관리합니다."),
-    ("endoscopy", "scope", "소화기 내시경", "소화기내시경 세부전문의가 내시경 검사를 합니다."),
+    ("endoscopy", "scope", "소화기 내시경", "소화기내시경 세부전문의가 위내시경과 대장내시경 검사를 합니다."),
     ("ultrasound", "wave", "초음파 검사", "복부, 갑상선, 경동맥, 심장, 유방 초음파 검사를 합니다."),
     ("thyroid", "thyroid", "갑상선 질환", "갑상선 기능 검사, 초음파, 세침흡인세포검사(FNA)로 진단하고 관리합니다."),
     ("checkup", "clipboard", "건강검진", "국가건강검진과 보험사 지정 검진을 받으실 수 있습니다."),
@@ -281,8 +281,8 @@ CLINIC_DETAIL = {
                 "갑작스럽게 생긴 증상은 원인을 확인하고 필요한 검사와 치료를 안내합니다."),
     "chronic": (["고혈압", "당뇨병", "고지혈증(이상지질혈증)", "지방간"],
                 "만성질환은 꾸준한 관리가 중요합니다. 정기적인 검사로 수치를 확인하고, 생활습관과 약 복용을 함께 점검합니다."),
-    "endoscopy": (["위내시경", "진정(수면) 내시경", "내시경 후 회복실 이용"],
-                  "소화기내시경 세부전문의가 내시경 검사를 하며, 진정 내시경 후에는 회복실에서 충분히 쉬신 뒤 귀가하실 수 있습니다."),
+    "endoscopy": (["위내시경", "대장내시경", "진정(수면) 내시경", "내시경 후 회복실 이용"],
+                  "소화기내시경 세부전문의가 위내시경과 대장내시경 검사를 하며, 진정 내시경 후에는 회복실에서 충분히 쉬신 뒤 귀가하실 수 있습니다."),
     "ultrasound": (["상복부: 간암, 간경화, 지방간, 췌장암, 담석 등", "갑상선: 갑상선암, 갑상선결절, 갑상선염 등",
                     "경동맥: 뇌졸중, 동맥경화, 심근경색 등", "심장: 심근경색, 심장부정맥, 심장질환 등",
                     "유방: 유방암, 유방종양, 물혹 등"],
@@ -556,7 +556,7 @@ def checkup():
   </div>
   <div class="detail">
     <div><span class="tag">추가 검사</span><h2>내시경 · 초음파</h2></div>
-    <div><p>필요에 따라 위내시경(진정 내시경 가능)과 복부, 갑상선, 경동맥, 심장, 유방 초음파 검사를 함께 받으실 수 있습니다.</p>
+    <div><p>필요에 따라 위내시경, 대장내시경(진정 내시경 가능)과 복부, 갑상선, 경동맥, 심장, 유방 초음파 검사를 함께 받으실 수 있습니다.</p>
       <p><a href="clinic.html#ultrasound" style="color:var(--blue);font-weight:600">초음파 검사 자세히 보기 →</a></p></div>
   </div>
 </div></section>
@@ -641,10 +641,10 @@ def notice_post(d, t, body_fn):
 '''
 
 PAGES = [
-    ("index.html", "홈", "안산 중앙역 내마음내과의원. 내과 전문의·소화기내시경 세부전문의 진료, 여의사(여성 내과 전문의) 진료, 위내시경·수면내시경, 복부·갑상선·경동맥·심장·유방 초음파, 국가건강검진.", home),
+    ("index.html", "홈", "안산 중앙역 내마음내과의원. 내과 전문의·소화기내시경 세부전문의 진료, 여의사(여성 내과 전문의) 진료, 위내시경·대장내시경·수면내시경, 복부·갑상선·경동맥·심장·유방 초음파, 국가건강검진.", home),
     ("about.html", "병원소개", "안산 내마음내과의원 인사말, 의료진(내과 전문의·소화기내시경 세부전문의, 여의사 진료), 내시경실·초음파실 등 내부시설.", about),
-    ("clinic.html", "진료과목", "안산 내마음내과 진료과목: 일반 내과, 고혈압·당뇨 만성질환, 위내시경·수면내시경, 초음파, 갑상선 결절 세침검사(FNA), 예방접종.", clinic),
-    ("checkup.html", "건강검진센터", "안산 건강검진: 국가건강검진, 삼성생명 지정 검진, 위내시경·초음파 추가 검사와 검진 준비사항 안내.", checkup),
+    ("clinic.html", "진료과목", "안산 내마음내과 진료과목: 일반 내과, 고혈압·당뇨 만성질환, 위내시경·대장내시경·수면내시경, 초음파, 갑상선 결절 세침검사(FNA), 예방접종.", clinic),
+    ("checkup.html", "건강검진센터", "안산 건강검진: 국가건강검진, 삼성생명 지정 검진, 위·대장내시경과 초음파 추가 검사와 검진 준비사항 안내.", checkup),
     ("info.html", "이용안내", "안산 내마음내과 진료시간, 오시는 길(4호선 중앙역 1번 출구), 주차, 비급여 진료비, 제증명 발급 안내.", info),
     ("notice.html", "공지사항", "안산 내마음내과 공지사항과 새로운 소식.", notice_list),
 ] + [(fn, t, sm, (lambda d=d, t=t, b=b: notice_post(d, t, b))) for fn, d, t, sm, _, b in NOTICES]
