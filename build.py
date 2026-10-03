@@ -28,10 +28,10 @@ CLINIC = {
     "naver_verify": "0e707b32e6be84076a01bb5e6da48e12f5174f0b",
     # 구글 서치 콘솔 'HTML 태그' 소유확인 코드(content 값)
     "google_verify": "ugVOQMaziAswVkHvZ3EjCcV3jZODKmp-OwvgpkrEThk",
-    "name_en": "MyHeart Internal Medicine Clinic",
+    "name_en": "My Heart Internal Medicine Clinic",
 }
 # 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
-SEO_KEYWORDS = "내마음내과의원 안산, 안산 내마음내과, MyHeart Internal Medicine, 안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
+SEO_KEYWORDS = "내마음내과의원 안산, 안산 내마음내과, My Heart Internal Medicine, MyHeart Internal Medicine, 안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
 SEO_LINE = "안산 중앙역 내과 · 건강검진 · 위내시경 · 대장내시경 · 초음파 · 여의사(여성 내과 전문의) 진료"
 CLOSED = ' class="closed"'
 CURRENT = ' aria-current="page"'
@@ -173,7 +173,7 @@ def json_ld(lang="ko"):
         "@context": "https://schema.org", "@type": "MedicalClinic",
         "name": CLINIC["name_full"] if lang == "ko" else CLINIC["name_en"],
         "alternateName": [CLINIC["name"], CLINIC["name_full"], "내마음내과 건강검진센터", CLINIC["name_en"],
-                          "MyHeart Internal Medicine", "Naemaeum Internal Medicine Clinic", "Naemaeum Naegwa"],
+                          "My Heart Internal Medicine", "MyHeart Internal Medicine Clinic", "MyHeart Internal Medicine", "Naemaeum Internal Medicine Clinic", "Naemaeum Naegwa"],
         "url": CLINIC["domain"] + ("/" if lang == "ko" else "/en/"), "telephone": CLINIC["phone"],
         "image": CLINIC["domain"] + "/assets/img/doctors-banner-800.jpg",
         "logo": CLINIC["domain"] + "/assets/img/logo.png",

@@ -13,8 +13,8 @@ from build import icon, li, LOGO_MARK, CURRENT, CLOSED, HEAD_FONTS, CLINIC as KO
 OUT = ko.ROOT / "en"
 
 CLINIC = {
-    "name": "MyHeart Internal Medicine",
-    "name_full": "MyHeart Internal Medicine Clinic",
+    "name": "My Heart Internal Medicine",
+    "name_full": "My Heart Internal Medicine Clinic",
     "name_ko": KO["name_full"],
     "slogan": "Your health, always close by",
     "phone": KO["phone"],
@@ -28,7 +28,7 @@ CLINIC = {
     "domain": KO["domain"],
 }
 
-SEO_KEYWORDS = ("MyHeart Internal Medicine Clinic, Naemaeum Internal Medicine, 내마음내과의원, Ansan internal medicine, "
+SEO_KEYWORDS = ("My Heart Internal Medicine Clinic, MyHeart Internal Medicine Clinic, Naemaeum Internal Medicine, 내마음내과의원, Ansan internal medicine, "
                 "Ansan health checkup, Ansan endoscopy, Ansan gastroscopy, Ansan colonoscopy, Ansan ultrasound, "
                 "female doctor Ansan, Jungang Station clinic")
 
@@ -358,7 +358,7 @@ def home():
   <div class="wrap">
     <div>
       <div class="eyebrow">{CLINIC["slogan"]}</div>
-      <h1>Care that listens,<br><em>MyHeart Internal Medicine</em></h1>
+      <h1>Care that listens,<br><em>My Heart Internal Medicine</em></h1>
       <p class="lead">Two internal medicine specialists, including a female physician, care for you. Endoscopy, ultrasound and health checkups are all available in one place.</p>
       <div class="badges">
         <span class="badge">{icon("shield")}Samsung Life designated checkup clinic</span>
@@ -576,12 +576,12 @@ def notice_post(d, t, body_fn):
 '''
 
 PAGES = [
-    ("index.html", "Home", "MyHeart Internal Medicine Clinic near Jungang Station, Ansan: internal medicine specialists, a female internist, gastroscopy and colonoscopy (sedation available), ultrasound and national health screening.", home),
-    ("about.html", "About Us", "Welcome message, our doctors and facilities at MyHeart Internal Medicine Clinic, Ansan.", about),
+    ("index.html", "Home", "My Heart Internal Medicine Clinic near Jungang Station, Ansan: internal medicine specialists, a female internist, gastroscopy and colonoscopy (sedation available), ultrasound and national health screening.", home),
+    ("about.html", "About Us", "Welcome message, our doctors and facilities at My Heart Internal Medicine Clinic, Ansan.", about),
     ("clinic.html", "Services", "General internal medicine, chronic disease care, gastroscopy and colonoscopy, ultrasound, thyroid FNA and vaccinations in Ansan.", clinic),
     ("checkup.html", "Health Checkups", "National health screening, insurer-designated checkups, endoscopy and ultrasound add-ons and how to prepare.", checkup),
     ("info.html", "Visiting Us", "Opening hours, directions from Jungang Station Exit 1, parking, non-covered fees and certificates.", info),
-    ("notice.html", "News", "News and announcements from MyHeart Internal Medicine Clinic.", notice_list),
+    ("notice.html", "News", "News and announcements from My Heart Internal Medicine Clinic.", notice_list),
 ] + [(fn, t, sm, (lambda d=d, t=t, b=b: notice_post(d, t, b))) for fn, d, t, sm, _, b in NOTICES]
 
 def build(preview_dir=None):
