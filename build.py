@@ -25,7 +25,7 @@ CLINIC = {
     "map_query": "내마음내과의원 안산",
     "instagram": "https://www.instagram.com/myheart_internalmed/",
     # 네이버 서치어드바이저에서 받은 사이트 소유확인 코드(content 값)를 넣으면 모든 페이지에 들어갑니다.
-    "naver_verify": "",
+    "naver_verify": "0e707b32e6be84076a01bb5e6da48e12f5174f0b",
 }
 # 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
 SEO_KEYWORDS = "안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
