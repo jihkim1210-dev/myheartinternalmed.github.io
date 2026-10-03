@@ -310,3 +310,4 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
 @media (max-width:860px){.lang{margin-left:auto}.menu-btn{order:4;margin-left:2px}}
 .doc-body li a{color:var(--blue);word-break:break-word}
 .doc-body .muted,.post-body .muted,li .muted{color:var(--muted)}
+@media (min-width:980px){.doctor ul:has(a){columns:1}}
