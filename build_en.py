@@ -28,6 +28,10 @@ CLINIC = {
     "domain": KO["domain"],
 }
 
+SEO_KEYWORDS = ("MyHeart Internal Medicine Clinic, Naemaeum Internal Medicine, 내마음내과의원, Ansan internal medicine, "
+                "Ansan health checkup, Ansan endoscopy, Ansan gastroscopy, Ansan colonoscopy, Ansan ultrasound, "
+                "female doctor Ansan, Jungang Station clinic")
+
 HOURS = [
     ("Weekdays", "08:00 – 18:00", "Lunch break 13:00 – 14:00", False),
     ("Saturday", "08:00 – 13:00", "", False),
@@ -73,7 +77,7 @@ def footer():
   <div class="wrap">
     {logo(white=True)}
     <dl>
-      <dt>Clinic</dt><dd>{CLINIC["name_full"]} ({CLINIC["name_ko"]})</dd>
+      <dt>Clinic</dt><dd>{CLINIC["name_full"]} ({CLINIC["name_ko"]}, Naemaeum Internal Medicine)</dd>
       <dt>Representative</dt><dd>{CLINIC["owner"]}, M.D.</dd>
       <dt>Address</dt><dd>{CLINIC["address"]}</dd>
       <dt>Phone</dt><dd>{CLINIC["phone"]} ({CLINIC["phone_intl"]})</dd>
@@ -103,12 +107,14 @@ def page(filename, title, description, body):
     url = f'{CLINIC["domain"]}/en/{path}'
     meta = (f'<title>{page_title}</title>'
             f'<meta name="description" content="{description}">'
+            f'<meta name="keywords" content="{SEO_KEYWORDS}">{ko.verify_meta()}'
             f'<meta property="og:type" content="website"><meta property="og:site_name" content="{CLINIC["name_full"]}">'
             f'<meta property="og:locale" content="en_US"><meta property="og:url" content="{url}">'
             f'<meta property="og:title" content="{page_title}">'
             f'<meta property="og:description" content="{description}">'
             f'<meta property="og:image" content="{CLINIC["domain"]}/assets/img/doctors-banner-800.jpg">'
             f'<link rel="icon" href="assets/img/favicon.png"><link rel="canonical" href="{url}">{ko.hreflang(filename)}'
+            f'{ko.json_ld("en") if filename == "index.html" else ""}'
             f'{HEAD_FONTS}<link rel="stylesheet" href="assets/style.css">')
     content = f'{header(filename)}\n<main>\n{body}\n</main>\n{footer()}'
     html = (f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'

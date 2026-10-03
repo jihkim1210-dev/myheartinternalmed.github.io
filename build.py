@@ -26,9 +26,12 @@ CLINIC = {
     "instagram": "https://www.instagram.com/myheart_internalmed/",
     # 네이버 서치어드바이저에서 받은 사이트 소유확인 코드(content 값)를 넣으면 모든 페이지에 들어갑니다.
     "naver_verify": "0e707b32e6be84076a01bb5e6da48e12f5174f0b",
+    # 구글 서치 콘솔 'HTML 태그' 소유확인 코드(content 값)
+    "google_verify": "",
+    "name_en": "MyHeart Internal Medicine Clinic",
 }
 # 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
-SEO_KEYWORDS = "안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
+SEO_KEYWORDS = "내마음내과의원 안산, 안산 내마음내과, MyHeart Internal Medicine, 안산내과, 안산 내과, 안산건강검진, 안산내시경, 안산위내시경, 안산대장내시경, 안산여의사, 안산초음파, 중앙역내과, 내마음내과, 내마음내과의원"
 SEO_LINE = "안산 중앙역 내과 · 건강검진 · 위내시경 · 대장내시경 · 초음파 · 여의사(여성 내과 전문의) 진료"
 CLOSED = ' class="closed"'
 CURRENT = ' aria-current="page"'
@@ -156,8 +159,8 @@ def footer():
 }})();
 </script>'''
 
-def json_ld():
-    """검색엔진용 병원 정보(구조화 데이터)."""
+def json_ld(lang="ko"):
+    """검색엔진용 병원 정보(구조화 데이터). 한국어·영어 이름을 모두 넣어 어느 쪽으로 검색해도 같은 병원으로 인식되게 합니다."""
     import json
     days = {"평일": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "토요일": ["Saturday"]}
     hours = []
@@ -168,13 +171,18 @@ def json_ld():
         hours.append({"@type": "OpeningHoursSpecification", "dayOfWeek": days[day], "opens": o, "closes": c})
     data = {
         "@context": "https://schema.org", "@type": "MedicalClinic",
-        "name": CLINIC["name_full"], "alternateName": [CLINIC["name"], "내마음내과 건강검진센터"],
-        "url": CLINIC["domain"] + "/", "telephone": CLINIC["phone"],
+        "name": CLINIC["name_full"] if lang == "ko" else CLINIC["name_en"],
+        "alternateName": [CLINIC["name"], CLINIC["name_full"], "내마음내과 건강검진센터", CLINIC["name_en"],
+                          "MyHeart Internal Medicine", "Naemaeum Internal Medicine Clinic", "Naemaeum Naegwa"],
+        "url": CLINIC["domain"] + ("/" if lang == "ko" else "/en/"), "telephone": CLINIC["phone"],
         "image": CLINIC["domain"] + "/assets/img/doctors-banner-800.jpg",
         "logo": CLINIC["domain"] + "/assets/img/logo.png",
-        "address": {"@type": "PostalAddress", "streetAddress": "예술대학로 17 안산중앙노블레스 5층",
-                    "addressLocality": "안산시 단원구", "addressRegion": "경기도", "addressCountry": "KR"},
-        "areaServed": "경기도 안산시",
+        "address": ({"@type": "PostalAddress", "streetAddress": "예술대학로 17 안산중앙노블레스 5층",
+                     "addressLocality": "안산시 단원구", "addressRegion": "경기도", "addressCountry": "KR"} if lang == "ko" else
+                    {"@type": "PostalAddress", "streetAddress": "5F Ansan Jungang Noblesse, 17 Yesuldaehak-ro",
+                     "addressLocality": "Danwon-gu, Ansan-si", "addressRegion": "Gyeonggi-do", "addressCountry": "KR"}),
+        "areaServed": "경기도 안산시" if lang == "ko" else "Ansan, Gyeonggi-do",
+        "inLanguage": lang, "knowsLanguage": ["ko", "en"],
         "medicalSpecialty": ["InternalMedicine", "Gastroenterologic"],
         "availableService": [{"@type": "MedicalProcedure", "name": n} for n in
                              ["건강검진", "국가건강검진", "위내시경", "대장내시경", "진정(수면) 내시경", "복부 초음파", "갑상선 초음파",
@@ -184,12 +192,18 @@ def json_ld():
     }
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
 
+def verify_meta():
+    out = f'<meta name="naver-site-verification" content="{CLINIC["naver_verify"]}">' if CLINIC["naver_verify"] else ""
+    if CLINIC["google_verify"]:
+        out += f'<meta name="google-site-verification" content="{CLINIC["google_verify"]}">'
+    return out
+
 def page(filename, title, description, body, full=True):
     """full=True: 실제 배포용(완전한 HTML). full=False: 미리보기용(문서 틀 없이)."""
     page_title = (f'{CLINIC["name_full"]} | 안산 내과 · 건강검진 · 위·대장내시경 · 초음파' if filename == "index.html"
                   else f'{title} | 안산 {CLINIC["name_full"]}')
     url = f'{CLINIC["domain"]}/{"" if filename == "index.html" else filename}'
-    verify = f'<meta name="naver-site-verification" content="{CLINIC["naver_verify"]}">' if CLINIC["naver_verify"] else ""
+    verify = verify_meta()
     meta = (f'<title>{page_title}</title>'
             f'<meta name="description" content="{description}">'
             f'<meta name="keywords" content="{SEO_KEYWORDS}">{verify}'
