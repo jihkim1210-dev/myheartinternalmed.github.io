@@ -27,7 +27,7 @@ CLINIC = {
     # 네이버 서치어드바이저에서 받은 사이트 소유확인 코드(content 값)를 넣으면 모든 페이지에 들어갑니다.
     "naver_verify": "0e707b32e6be84076a01bb5e6da48e12f5174f0b",
     # 구글 서치 콘솔 'HTML 태그' 소유확인 코드(content 값)
-    "google_verify": "",
+    "google_verify": "ugVOQMaziAswVkHvZ3EjCcV3jZODKmp-OwvgpkrEThk",
     "name_en": "MyHeart Internal Medicine Clinic",
 }
 # 검색 노출용 지역 키워드 (제목·설명·구조화 데이터에 사용)
