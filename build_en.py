@@ -167,7 +167,7 @@ DOCTORS = [
             "Research at the Yoshikazu Uchida lab, School of Medicine, University of California, San Francisco (UCSF) (2016)",
         ],
         "papers": [
-            '<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12989655/" target="_blank" rel="noopener"><em>Effectiveness and Tolerability of Anti-Tumor Necrosis Factor Alpha Therapy in Refractory Intestinal Behçet\'s Disease: A Large Single-Center Study</em></a>. <span class="muted">Gut and Liver. 2026;20(2):305–314 (co-author)</span>',
+            '<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12989655/" target="_blank" rel="noopener"><em>Effectiveness and Tolerability of Anti-Tumor Necrosis Factor Alpha Therapy in Refractory Intestinal Behçet\'s Disease: A Large Single-Center Study</em></a>. <span class="muted">Gut and Liver. 2026;20(2):305–314</span>',
         ],
     },
 ]
