@@ -166,11 +166,14 @@ DOCTORS = [
             "Excellent Paper Award, Korean Society of Gastroenterology (2019)",
             "Research at the Yoshikazu Uchida lab, School of Medicine, University of California, San Francisco (UCSF) (2016)",
         ],
+        "papers": [
+            '<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12989655/" target="_blank" rel="noopener"><em>Effectiveness and Tolerability of Anti-Tumor Necrosis Factor Alpha Therapy in Refractory Intestinal Behçet\'s Disease: A Large Single-Center Study</em></a>. <span class="muted">Gut and Liver. 2026;20(2):305–314 (co-author)</span>',
+        ],
     },
 ]
 
 def doctor_card(d):
-    blocks = [("Career", d["career"]), ("Professional societies", d["societies"]), ("Awards and research", d["awards"])]
+    blocks = [("Career", d["career"]), ("Professional societies", d["societies"]), ("Awards and research", d["awards"]), ("Publications", d.get("papers", []))]
     detail = "".join(f'<h4>{t}</h4><ul>{li(xs)}</ul>' for t, xs in blocks if xs)
     return f'''<article class="doctor" id="dr-{d["id"]}">
   <img class="doc-photo" src="{d["photo"]}" alt="Dr. {d["name"]}, {d["role"]}" width="640" height="640" loading="lazy">
@@ -291,6 +294,7 @@ If you would prefer to be seen by a female doctor, please feel free to visit.</p
 <h2>Dr. Jiwoo Kim: career</h2><ul>{li(d["career"])}</ul>
 <h2>Professional societies</h2><ul>{li(d["societies"])}</ul>
 <h2>Awards and research</h2><ul>{li(d["awards"])}</ul>
+<h2>Publications</h2><ul>{li(d["papers"])}</ul>
 <p>See our hours on the <a href="info.html#hours">Visiting Us</a> page, or call {CLINIC["phone"]}.</p>'''
 
 def notice_ultrasound():

@@ -308,3 +308,5 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
 .lang a:hover{color:var(--blue)}
 .header-call{order:3}
 @media (max-width:860px){.lang{margin-left:auto}.menu-btn{order:4;margin-left:2px}}
+.doc-body li a{color:var(--blue);word-break:break-word}
+.doc-body .muted,.post-body .muted,li .muted{color:var(--muted)}
