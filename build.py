@@ -98,6 +98,22 @@ HEAD_FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
               '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
               '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">')
 
+def lang_switch(lang, current):
+    """한국어/English 전환 버튼. 영어 페이지는 en/ 폴더에 같은 파일명으로 있습니다."""
+    ko_href = current if lang == "ko" else f"../{current}"
+    en_href = f"en/{current}" if lang == "ko" else current
+    ko_cur = CURRENT if lang == "ko" else ""
+    en_cur = CURRENT if lang == "en" else ""
+    return (f'<div class="lang" role="group" aria-label="Language">'
+            f'<a href="{ko_href}" lang="ko" hreflang="ko"{ko_cur}>한국어</a>'
+            f'<a href="{en_href}" lang="en" hreflang="en"{en_cur}>EN</a></div>')
+
+def hreflang(current):
+    path = "" if current == "index.html" else current
+    return (f'<link rel="alternate" hreflang="ko" href="{CLINIC["domain"]}/{path}">'
+            f'<link rel="alternate" hreflang="en" href="{CLINIC["domain"]}/en/{path}">'
+            f'<link rel="alternate" hreflang="x-default" href="{CLINIC["domain"]}/{path}">')
+
 def header(current):
     def is_current(href):
         return href == current or (href == "notice.html" and current.startswith("notice-"))
@@ -107,6 +123,7 @@ def header(current):
     {logo()}
     <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav">{icon("menu")}</button>
     <nav class="nav" id="site-nav" aria-label="주요 메뉴" hidden>{links}</nav>
+    {lang_switch("ko", current)}
     <a class="header-call" href="tel:{CLINIC["phone"]}">{icon("phone")}{CLINIC["phone"]}</a>
   </div>
 </header>'''
@@ -181,7 +198,7 @@ def page(filename, title, description, body, full=True):
             f'<meta property="og:title" content="{page_title}">'
             f'<meta property="og:description" content="{description}">'
             f'<meta property="og:image" content="{CLINIC["domain"]}/assets/img/doctors-banner-800.jpg">'
-            f'<link rel="icon" href="assets/img/favicon.png"><link rel="canonical" href="{url}">'
+            f'<link rel="icon" href="assets/img/favicon.png"><link rel="canonical" href="{url}">{hreflang(filename)}'
             f'{json_ld() if filename == "index.html" else ""}'
             f'{HEAD_FONTS}<link rel="stylesheet" href="assets/style.css">')
     content = f'{header(filename)}\n<main>\n{body}\n</main>\n{footer()}'
@@ -657,11 +674,14 @@ if __name__ == "__main__":
         if preview_dir and fn == "index.html":
             preview_dir.mkdir(parents=True, exist_ok=True)
             (preview_dir / fn).write_text(page(fn, title, desc, body_fn(), full=False), encoding="utf-8")
+    import build_en
+    en_pages = build_en.build(preview_dir)
     import datetime
     today = datetime.date.today().isoformat()
-    urls = "".join(f'<url><loc>{CLINIC["domain"]}/{"" if fn == "index.html" else fn}</loc><lastmod>{today}</lastmod></url>\n'
-                   for fn, *_ in PAGES)
+    locs = [f'{CLINIC["domain"]}/{"" if fn == "index.html" else fn}' for fn, *_ in PAGES]
+    locs += [f'{CLINIC["domain"]}/en/{"" if fn == "index.html" else fn}' for fn in en_pages]
+    urls = "".join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n' for u in locs)
     (ROOT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n', encoding="utf-8")
     (ROOT / "robots.txt").write_text(f'User-agent: *\nAllow: /\n\nSitemap: {CLINIC["domain"]}/sitemap.xml\n', encoding="utf-8")
-    print("built", [p[0] for p in PAGES], "+ sitemap.xml, robots.txt")
+    print("built", [p[0] for p in PAGES], "+ en/", en_pages, "+ sitemap.xml, robots.txt")

@@ -299,3 +299,12 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
   .gallery figure:first-child{display:grid;grid-template-rows:1fr auto}
   .gallery figure:first-child img{height:100%;contain:size;flex:none}
 }
+
+/* 언어 전환 (한국어 / EN) */
+.site-header .nav{order:1}
+.lang{order:2;display:flex;align-items:center;flex-shrink:0;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px;font-weight:600}
+.lang a{padding:6px 11px;text-decoration:none;color:var(--muted);line-height:1.2}
+.lang a[aria-current="page"]{background:var(--soft);color:var(--blue)}
+.lang a:hover{color:var(--blue)}
+.header-call{order:3}
+@media (max-width:860px){.lang{margin-left:auto}.menu-btn{order:4;margin-left:2px}}
