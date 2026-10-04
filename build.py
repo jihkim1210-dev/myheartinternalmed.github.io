@@ -274,7 +274,7 @@ DOCTORS = [
 def doctor_card(d, full=True):
     detail = ""
     if full:
-        blocks = [("약력", d["career"]), ("학회 활동", d["societies"]), ("수상 및 연구", d["awards"]), ("논문 게재", d.get("papers", []))]
+        blocks = [("약력", d["career"]), ("학회 활동", d["societies"]), ("수상 및 연구", d["awards"]), ("논문", d.get("papers", []))]
         detail = "".join(f'<h4>{t}</h4><ul>{li(xs)}</ul>' for t, xs in blocks if xs)
     return f'''<article class="doctor" id="dr-{d["id"]}">
   <img class="doc-photo" src="{d["photo"]}" alt="{d["role"]} {d["name"]}" width="640" height="640" loading="lazy">
@@ -390,7 +390,7 @@ def notice_female_doctor():
 <h2>김지우 원장 약력</h2><ul>{li(d["career"])}</ul>
 <h2>학회 활동</h2><ul>{li(d["societies"])}</ul>
 <h2>수상 및 연구</h2><ul>{li(d["awards"])}</ul>
-<h2>논문 게재</h2><ul>{li(d["papers"])}</ul>
+<h2>논문</h2><ul>{li(d["papers"])}</ul>
 <p>진료시간은 <a href="info.html#hours">이용안내</a>에서 확인하시거나 전화({CLINIC["phone"]})로 문의해 주세요.</p>'''
 
 def notice_ultrasound():
