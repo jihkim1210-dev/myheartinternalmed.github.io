@@ -311,3 +311,4 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offse
 .doc-body li a{color:var(--blue);word-break:break-word}
 .doc-body .muted,.post-body .muted,li .muted{color:var(--muted)}
 @media (min-width:980px){.doctor ul:has(a){columns:1}}
+@media (min-width:980px){.doctor h4:nth-of-type(n+3)+ul{columns:1}}
